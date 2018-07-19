@@ -4,7 +4,9 @@ Created on Thu Jul 19 16:53:23 2018
 
 @author: fangqiheng
 """
-
+import numpy as np
+from math import exp,sqrt
+import matplotlib.pyplot as plt
 r = 0.03
 v = 0.2 #volitility
 q = 0 #dividend rate
