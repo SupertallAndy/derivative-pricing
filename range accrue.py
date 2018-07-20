@@ -14,13 +14,15 @@ import matplotlib.pyplot as plt
 r = 0.03 #risk-free rate
 v = 0.2 #volitility
 q = 0 #dividend rate
-trading_days = 252
+t = 1
+trading_days = 252 #corresponding trading days to t
 lower_bound = 100
 upper_bound = 110
 s = 100
 percentage = 0.1
-times = 1000 #run how many times
-dt = t/M
+times = 1000 #run how many times(how many paths we generate)
+M = M = 120 #assume that stock price changes 120 times a day
+dt = t/(trading_days*M)
 result = []
 payoff_list = []
 for i in range(times):
@@ -31,16 +33,15 @@ for i in range(times):
             path.append(s)
         else:
             k = path[j-1]
-            for i in range(120):
+            #next, we calculate the closing price of the next day by running it M times
+            for i in range(M):
                 random_seed = np.random.lognormal((r-q-v*v*0.5)*dt,v*sqrt(dt))
                 k *= random_seed
-            #print(k)
             if k >= lower_bound and k <= upper_bound:
                 count += 1
             path.append(k)
     payoff_list.append(count/trading_days*percentage)
     result.append(path)
 
-#print(count)
 range_accrue = exp(-r*t) * np.average(payoff_list)
 print('the price of the range_accrue is:', range_accrue)
